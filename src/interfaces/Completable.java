@@ -1,4 +1,6 @@
 package interfaces;
 
-public class Completable {
+public interface  Completable {
+
+    void complete();
 }
