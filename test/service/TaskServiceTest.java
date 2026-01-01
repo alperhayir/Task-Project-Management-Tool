@@ -1,6 +1,7 @@
 package service;
 
 import model.Task;
+import model.User;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,4 +34,17 @@ public class TaskServiceTest {
         assertTrue(task.isCompleted());
     }
 
+    @Test
+    void kulaniciyaGorevAtanabiliyorMu(){
+
+        TaskService taskService = new TaskService();
+
+        User user = new User("a1","Alper");
+        Task task = taskService.createTask(
+                "3","Kullanici Görevi" , "Görev atama testi"
+        );
+        taskService.assignTaskToUser(task,user);
+        assertEquals(1,user.getTasks().size());
+        assertTrue(user.getTasks().contains(task));
+    }
 }
