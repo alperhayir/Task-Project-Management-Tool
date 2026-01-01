@@ -1,9 +1,11 @@
 package service;
 
-import model.Project;
-import model.Task;
-import model.User;
+import model.*;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskServiceTest {
@@ -65,5 +67,25 @@ public class TaskServiceTest {
 
         assertEquals(1,project.getTasks().size());
         assertTrue(project.getTasks().contains(task));
+    }
+
+    @Test
+    void bugunkuGorevListeleniyorMu(){
+        TaskService taskService = new TaskService();
+
+        Deadline deadline = new Deadline(LocalDate.now());
+        TimedTask task = new TimedTask(
+                "5",
+                "Bugünkü Görev",
+                "Deadline bugün",
+                deadline
+        );
+
+        taskService.getAllTasks().add(task);
+
+        List<TimedTask> upcomingTasks =taskService.getUpcomingTasks();
+
+        assertEquals(1,upcomingTasks.size());
+        assertTrue(upcomingTasks.contains(task));
     }
 }
