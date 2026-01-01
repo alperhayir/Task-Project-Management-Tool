@@ -1,5 +1,6 @@
 package service;
 
+import model.Project;
 import model.Task;
 import model.User;
 import org.junit.jupiter.api.Test;
@@ -46,5 +47,23 @@ public class TaskServiceTest {
         taskService.assignTaskToUser(task,user);
         assertEquals(1,user.getTasks().size());
         assertTrue(user.getTasks().contains(task));
+    }
+
+    @Test
+    void projeyeGorevAtanabiliyorMu(){
+        TaskService taskService = new TaskService();
+
+        Project project = new Project("p1","OOP Projesi");
+        Task task = taskService.createTask(
+                "4",
+                "Proje Görevi",
+                "Projeye atama testi"
+
+        );
+
+        taskService.assignTaskToProject(task , project);
+
+        assertEquals(1,project.getTasks().size());
+        assertTrue(project.getTasks().contains(task));
     }
 }
