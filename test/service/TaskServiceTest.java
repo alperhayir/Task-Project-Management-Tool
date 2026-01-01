@@ -21,6 +21,16 @@ public class TaskServiceTest {
 
     }
 
+    @Test
+    void gorevTamamlanincaCompletedTrueMu(){
+        TaskService taskService = new TaskService();
 
+        Task task = taskService.createTask(
+                "2","Bitirilecek Görev","Junit test yaz"
+        );
+
+        taskService.completeTask("2");
+        assertTrue(task.isCompleted());
+    }
 
 }
