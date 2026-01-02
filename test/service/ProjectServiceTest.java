@@ -17,5 +17,17 @@ public class ProjectServiceTest {
 
     }
 
+    @Test
+    void projeIdIleBulunabiliyorMu(){
+        ProjectService projectService = new ProjectService();
+
+        projectService.createProject("p1","OOP Projesi");
+
+        Project foundProject = projectService.findProjectById("p1");
+        assertNotNull(foundProject);
+        assertEquals("p1",foundProject.getId());
+
+    }
+
 
 }
