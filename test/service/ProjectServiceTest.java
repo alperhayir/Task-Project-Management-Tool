@@ -1,6 +1,7 @@
 package service;
 
 import model.Project;
+import model.Task;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,5 +30,26 @@ public class ProjectServiceTest {
 
     }
 
+    @Test
+    void olmayanProjeNullDonuyorMu(){
+        ProjectService projectService = new ProjectService();
+
+        Project project = projectService.findProjectById("p999");
+
+        assertNull(project);
+    }
+
+    @Test
+    void projeGorevleriGetiriliyorMu(){
+        ProjectService projectService = new ProjectService();
+
+        Project project = projectService.createProject("p1","OOP Projesi");
+
+        Task task = new Task ("t1","Proje Gorevi","Test");
+        project.addTask(task);
+
+        assertEquals(1,projectService.getProjectTasks("p1").size());
+
+    }
 
 }
