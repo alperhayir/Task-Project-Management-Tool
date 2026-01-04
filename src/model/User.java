@@ -25,5 +25,13 @@ public class User {
         this.tasks.add(task);
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 
 }

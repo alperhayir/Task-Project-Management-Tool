@@ -32,6 +32,14 @@ public class TaskService {
         }
     }
 
+    public TimedTask createTimedTask(String id, String title, String description, LocalDate dueDate ) {
+
+        Deadline deadline = new Deadline(dueDate);
+        TimedTask timedTask = new TimedTask(id, title, description, deadline);
+        tasks.add(timedTask);
+        return timedTask;
+    }
+
     public void assignTaskToUser(Task task, User user) {
         user.addTask(task);
     }

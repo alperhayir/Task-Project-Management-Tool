@@ -83,6 +83,7 @@ public class TaskServiceTest {
 
         taskService.getAllTasks().add(task);
 
+
         List<TimedTask> upcomingTasks =taskService.getUpcomingTasks();
 
         assertEquals(1,upcomingTasks.size());
