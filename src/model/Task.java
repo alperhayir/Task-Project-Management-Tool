@@ -8,6 +8,8 @@ public class Task  implements Completable {
     private String title;
     private String description;
     private boolean completed;
+    private Priority priority;
+
 
 
     public Task(String id,String title , String description) {
@@ -15,6 +17,8 @@ public class Task  implements Completable {
         this.title = title;
         this.description = description;
         this.completed = false;
+        this.priority = Priority.MEDIUM;
+
     }
 
     public String getId() {
@@ -35,5 +39,13 @@ public class Task  implements Completable {
     @Override
     public void complete(){
         this.completed = true;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
     }
 }
