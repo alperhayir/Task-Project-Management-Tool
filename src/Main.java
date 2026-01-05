@@ -20,6 +20,19 @@ public class Main {
         UserService userService = new UserService();
         ExportService exportService = new ExportService();
 
+        // Program başlarken verileri yükle
+        String dataFile = "data.txt";
+        java.io.File file = new java.io.File(dataFile);
+        if (file.exists()) {
+            System.out.println("Veriler yükleniyor...");
+            if (exportService.importFromSimpleFormat(taskService, projectService, userService, dataFile)) {
+                System.out.println("✔ Veriler başarıyla yüklendi.");
+            } else {
+                System.out.println("✖ Veri yükleme hatası.");
+            }
+            System.out.println();
+        }
+
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -40,7 +53,8 @@ public class Main {
             System.out.println("9 - Proje Ekle");
             System.out.println("10 - Bildirimleri Görüntüle");
             System.out.println("11 - Verileri Dosyaya Aktar");
-            System.out.println("12 - Verileri Sil");
+            System.out.println("12 - Verileri Dosyadan Yükle");
+            System.out.println("13 - Verileri Sil");
             System.out.println("0 - Çıkış");
             System.out.print("Seçiminiz: ");
 
@@ -444,6 +458,8 @@ public class Main {
                                     taskService, projectService, userService, fileName);
                             if (success) {
                                 System.out.println("✔ Görevler '" + fileName + "' dosyasına aktarıldı.");
+                                // Verileri otomatik kaydet
+                                exportService.saveDataToFile(taskService, projectService, userService, "data.txt");
                             } else {
                                 System.out.println("✖ Dosyaya aktarma başarısız oldu.");
                             }
@@ -452,6 +468,8 @@ public class Main {
                             success = exportService.exportAllProjectsToFile(projectService, fileName);
                             if (success) {
                                 System.out.println("✔ Projeler '" + fileName + "' dosyasına aktarıldı.");
+                                // Verileri otomatik kaydet
+                                exportService.saveDataToFile(taskService, projectService, userService, "data.txt");
                             } else {
                                 System.out.println("✖ Dosyaya aktarma başarısız oldu.");
                             }
@@ -460,6 +478,8 @@ public class Main {
                             success = exportService.exportAllUsersToFile(userService, fileName);
                             if (success) {
                                 System.out.println("✔ Kullanıcılar '" + fileName + "' dosyasına aktarıldı.");
+                                // Verileri otomatik kaydet
+                                exportService.saveDataToFile(taskService, projectService, userService, "data.txt");
                             } else {
                                 System.out.println("✖ Dosyaya aktarma başarısız oldu.");
                             }
@@ -469,6 +489,8 @@ public class Main {
                                     taskService, projectService, userService, fileName);
                             if (success) {
                                 System.out.println("✔ Tüm veriler '" + fileName + "' dosyasına aktarıldı.");
+                                // Verileri otomatik kaydet
+                                exportService.saveDataToFile(taskService, projectService, userService, "data.txt");
                             } else {
                                 System.out.println("✖ Dosyaya aktarma başarısız oldu.");
                             }
@@ -485,8 +507,36 @@ public class Main {
                     }
                 }
 
-                // 🗑️ Verileri sil
+                // 📥 Verileri dosyadan yükle
                 case 12 -> {
+                    System.out.print("Dosya adı (örn: data.txt): ");
+                    String fileName = scanner.nextLine();
+
+                    if (fileName.trim().isEmpty()) {
+                        System.out.println("✖ Dosya adı boş olamaz.");
+                        returnToMainMenu(scanner);
+                        break;
+                    }
+
+                    java.io.File importFile = new java.io.File(fileName);
+                    if (!importFile.exists()) {
+                        System.out.println("✖ Dosya bulunamadı: " + fileName);
+                        returnToMainMenu(scanner);
+                        break;
+                    }
+
+                    System.out.println("Veriler yükleniyor...");
+                    if (exportService.importFromSimpleFormat(taskService, projectService, userService, fileName)) {
+                        System.out.println("✔ Veriler başarıyla yüklendi.");
+                    } else {
+                        System.out.println("✖ Veri yükleme hatası.");
+                    }
+
+                    returnToMainMenu(scanner);
+                }
+
+                // 🗑️ Verileri sil
+                case 13 -> {
                     System.out.println("Silme Seçenekleri:");
                     System.out.println("1 - Görev Sil");
                     System.out.println("2 - Proje Sil");
@@ -693,6 +743,9 @@ public class Main {
                 }
 
                 case 0 -> {
+                    // Program kapanırken verileri kaydet
+                    System.out.println("Veriler kaydediliyor...");
+                    exportService.saveDataToFile(taskService, projectService, userService, "data.txt");
                     running = false;
                     System.out.println("Programdan çıkılıyor...");
                 }

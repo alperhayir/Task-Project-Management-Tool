@@ -1,0 +1,20 @@
+====================================
+   GÖREV & PROJE YÖNETİM SİSTEMİ
+   TAM VERİ RAPORU
+====================================
+
+=== KULLANICILAR ===
+ID: 1 | Ad: Alper | Görev Sayısı: 1
+
+=== PROJELER ===
+ID: 1 | Ad: Proje deneme | Görev Sayısı: 1
+
+=== GÖREVLER ===
+ID: 1 | Başlık: Denemegörev | Öncelik: MEDIUM | Durum: Devam Ediyor | Kullanıcı: Alper (ID: 1) | Proje: Proje deneme (ID: 1)
+
+====================================
+Özet:
+Toplam Kullanıcı: 1
+Toplam Proje: 1
+Toplam Görev: 1
+====================================
