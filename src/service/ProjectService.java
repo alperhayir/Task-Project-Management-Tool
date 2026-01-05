@@ -15,9 +15,31 @@ public class ProjectService {
     }
 
     public Project createProject(String id ,String name){
+        if (projectExists(id)) {
+            throw new IllegalArgumentException("Bu ID ile proje zaten var");
+        }
         Project project = new Project(id,name);
         projects.add(project);
         return project;
+    }
+
+    /**
+     * Proje ID'sinin mevcut olup olmadığını kontrol eder.
+     *
+     * @param projectId Kontrol edilecek proje ID'si
+     * @return Proje mevcut ise true, aksi halde false
+     */
+    public boolean projectExists(String projectId) {
+        return findProjectById(projectId) != null;
+    }
+
+    /**
+     * Proje listesinin boş olup olmadığını kontrol eder.
+     *
+     * @return Proje listesi boş ise true, aksi halde false
+     */
+    public boolean hasProjects() {
+        return !projects.isEmpty();
     }
     public List<Project> getAllProjects() {
         return projects;
@@ -38,5 +60,27 @@ public class ProjectService {
             return project.getTasks();
         }
         return null;
+    }
+
+    /**
+     * Belirtilen ID'ye sahip projeyi siler.
+     *
+     * @param projectId Silinecek projenin ID'si
+     * @return Proje bulunup silindi ise true, aksi halde false
+     */
+    public boolean deleteProject(String projectId) {
+        Project project = findProjectById(projectId);
+        if (project == null) {
+            return false;
+        }
+        projects.remove(project);
+        return true;
+    }
+
+    /**
+     * Tüm projeleri siler.
+     */
+    public void deleteAllProjects() {
+        projects.clear();
     }
 }

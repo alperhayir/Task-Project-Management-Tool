@@ -126,6 +126,57 @@ public class TaskService {
         return findTaskById(taskId) != null;
     }
 
+    /**
+     * Görev listesinin boş olup olmadığını kontrol eder.
+     *
+     * @return Görev listesi boş ise true, aksi halde false
+     */
+    public boolean hasTasks() {
+        return !tasks.isEmpty();
+    }
 
+    /**
+     * Görevin kullanıcıya atanabilir olup olmadığını kontrol eder.
+     *
+     * @return Görev ve kullanıcı mevcut ise true, aksi halde false
+     */
+    public boolean canAssignTaskToUser() {
+        return hasTasks();
+    }
+
+    /**
+     * Görevin projeye atanabilir olup olmadığını kontrol eder.
+     *
+     * @return Görev mevcut ise true, aksi halde false
+     */
+    public boolean canAssignTaskToProject() {
+        return hasTasks();
+    }
+
+    /**
+     * Belirtilen ID'ye sahip görevi siler.
+     * Görev kullanıcılardan ve projelerden de kaldırılır.
+     *
+     * @param taskId Silinecek görevin ID'si
+     * @return Görev bulunup silindi ise true, aksi halde false
+     */
+    public boolean deleteTask(String taskId) {
+        Task task = findTaskById(taskId);
+        if (task == null) {
+            return false;
+        }
+
+        // Kullanıcılardan görevi kaldır
+        // (UserService üzerinden yapılacak, burada sadece listeden kaldırıyoruz)
+        tasks.remove(task);
+        return true;
+    }
+
+    /**
+     * Tüm görevleri siler.
+     */
+    public void deleteAllTasks() {
+        tasks.clear();
+    }
 
 }

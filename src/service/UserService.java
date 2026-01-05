@@ -26,7 +26,38 @@ public class UserService {
         return findUserById(id) != null;
     }
 
+    /**
+     * Kullanıcı listesinin boş olup olmadığını kontrol eder.
+     *
+     * @return Kullanıcı listesi boş ise true, aksi halde false
+     */
+    public boolean hasUsers() {
+        return !users.isEmpty();
+    }
+
     public List<User> getAllUsers() {
         return users;
+    }
+
+    /**
+     * Belirtilen ID'ye sahip kullanıcıyı siler.
+     *
+     * @param id Silinecek kullanıcının ID'si
+     * @return Kullanıcı bulunup silindi ise true, aksi halde false
+     */
+    public boolean deleteUser(String id) {
+        User user = findUserById(id);
+        if (user == null) {
+            return false;
+        }
+        users.remove(user);
+        return true;
+    }
+
+    /**
+     * Tüm kullanıcıları siler.
+     */
+    public void deleteAllUsers() {
+        users.clear();
     }
 }
