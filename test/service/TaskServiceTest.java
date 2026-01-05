@@ -99,4 +99,54 @@ public class TaskServiceTest {
 
         assertEquals(1, upcomingTasks.size());
     }
+
+    @Test
+    void varsayilanOncelikMediumMu() {
+
+        TaskService taskService = new TaskService(new NotificationService());
+
+        Task task = taskService.createTask("p1", "Test", "Test");
+
+        assertEquals(Priority.MEDIUM, task.getPriority());
+    }
+
+    @Test
+    void sureliGorevOncelikAlabiliyorMu() {
+
+        TaskService taskService = new TaskService(new NotificationService());
+
+        TimedTask task = taskService.createTimedTask(
+                "t1",
+                "Deadline Görev",
+                "Test",
+                LocalDate.now().plusDays(2)
+        );
+
+        task.setPriority(Priority.HIGH);
+
+        assertEquals(Priority.HIGH, task.getPriority());
+    }
+
+    @Test
+    void highOncelikliGorevBildirimUretiyorMu() {
+
+        NotificationService ns = new NotificationService();
+        TaskService ts = new TaskService(ns);
+
+        TimedTask task = ts.createTimedTask(
+                "t2",
+                "Acil Görev",
+                "Test",
+                LocalDate.now().plusDays(1)
+        );
+
+        task.setPriority(Priority.HIGH);
+
+        ts.getUpcomingTasks();
+
+        assertTrue(ns.hasNotifications());
+    }
+
+
+
 }

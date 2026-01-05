@@ -8,9 +8,16 @@ import java.util.List;
 public class TaskService {
 
     private List<Task> tasks;
+    private NotificationService notificationService;
 
     public TaskService() {
         this.tasks = new ArrayList<>();
+
+    }
+
+    public TaskService(NotificationService notificationService) {
+        this();
+        this.notificationService = notificationService;
     }
 
     public Task createTask(String id, String title, String description) {
@@ -65,26 +72,46 @@ public class TaskService {
 
 
     public List<TimedTask> getUpcomingTasks() {
+
         List<TimedTask> upcomingTasks = new ArrayList<>();
+        LocalDate today = LocalDate.now();
 
         for (Task task : tasks) {
-            if (task instanceof TimedTask) {
-                TimedTask timedTask = (TimedTask) task;
+
+            if (task instanceof TimedTask timedTask) {
+
                 Deadline deadline = timedTask.getDeadline();
+                if (deadline == null) continue;
 
-                if (deadline != null) {
-                    LocalDate dueDate = deadline.getDueDate();
-                    LocalDate today = LocalDate.now();
+                LocalDate dueDate = deadline.getDueDate();
 
-                    if (!dueDate.isBefore(today) &&
-                            !dueDate.isAfter(today.plusDays(3))) {
-                        upcomingTasks.add(timedTask);
+                // 0–3 gün arası yaklaşan görev
+                if (!dueDate.isBefore(today) &&
+                        !dueDate.isAfter(today.plusDays(3))) {
+
+                    upcomingTasks.add(timedTask);
+
+                    // ⭐ HIGH öncelik → Notification üret
+                    if (timedTask.getPriority() == Priority.HIGH) {
+
+                        Notification notification = new Notification(
+                                "HIGH öncelikli görev yaklaşıyor: "
+                                        + timedTask.getTitle()
+                                        + " (Kalan gün: "
+                                        + java.time.temporal.ChronoUnit.DAYS
+                                        .between(today, dueDate) + ")",
+                                timedTask
+                        );
+
+                        notificationService.addNotification(notification);
                     }
                 }
             }
         }
+
         return upcomingTasks;
     }
+
 
     public Task findTaskById(String taskId) {
         for (Task task : tasks) {

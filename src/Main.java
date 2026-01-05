@@ -1,4 +1,5 @@
 import model.*;
+import service.NotificationService;
 import service.ProjectService;
 import service.TaskService;
 import service.UserService;
@@ -12,9 +13,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-        TaskService taskService = new TaskService();
+        NotificationService notificationService = new NotificationService();
+        TaskService taskService = new TaskService(notificationService);
         ProjectService projectService = new ProjectService();
         UserService userService = new UserService();
+
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -318,6 +321,26 @@ public class Main {
 
                     returnToMainMenu(scanner);
                 }
+
+                case 10 -> {
+
+                    if (!notificationService.hasNotifications()) {
+                        System.out.println("Bildirim yok.");
+                        returnToMainMenu(scanner);
+                        break;
+                    }
+
+                    for (Notification n : notificationService.getAllNotifications()) {
+
+                        System.out.println("Mesaj: " + n.getMessage());
+                        System.out.println("Tarih: " + n.getCreatedAt());
+                        System.out.println("Görev: " + n.getRelatedTask().getTitle());
+                        System.out.println("-------------------");
+                    }
+
+                    returnToMainMenu(scanner);
+                }
+
 
                 case 0 -> {
                     running = false;
