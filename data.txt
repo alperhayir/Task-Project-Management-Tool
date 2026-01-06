@@ -1,3 +1,0 @@
-USER|1|Alper
-PROJECT|1|Proje deneme
-TASK|1|Denemegörev|denemgörevaçıklaması|MEDIUM||1|1|false

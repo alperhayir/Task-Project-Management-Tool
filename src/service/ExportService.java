@@ -117,6 +117,7 @@ public class ExportService {
                     writer.write("Görevler:\n");
                     for (Task task : project.getTasks()) {
                         writer.write("  - " + task.getId() + ": " + task.getTitle() +
+                                " | Açıklama: " + task.getDescription() +
                                 " (" + task.getPriority() + ")\n");
                     }
                 }
@@ -161,6 +162,7 @@ public class ExportService {
                     writer.write("Görevler:\n");
                     for (Task task : user.getTasks()) {
                         writer.write("  - " + task.getId() + ": " + task.getTitle() +
+                                " | Açıklama: " + task.getDescription() +
                                 " (" + task.getPriority() + ")\n");
                     }
                 }
@@ -229,6 +231,7 @@ public class ExportService {
             } else {
                 for (Task task : tasks) {
                     writer.write("ID: " + task.getId() + " | Başlık: " + task.getTitle() +
+                            " | Açıklama: " + task.getDescription() +
                             " | Öncelik: " + task.getPriority() +
                             " | Durum: " + (task.isCompleted() ? "Tamamlandı" : "Devam Ediyor"));
 

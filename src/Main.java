@@ -281,17 +281,23 @@ public class Main {
                         long remaining = ChronoUnit.DAYS.between(LocalDate.now(), due);
 
                         String projectName = "Yok";
+                        String projectDescription = "";
                         for (Project p : projectService.getAllProjects()) {
                             if (p.getTasks().contains(t)) {
                                 projectName = p.getName();
+                                projectDescription = p.getDescription();
                                 break;
                             }
                         }
 
                         System.out.println("ID: " + t.getId());
                         System.out.println("Ad: " + t.getTitle());
+                        System.out.println("Açıklama: " + t.getDescription());
                         System.out.println("Öncelik: " + t.getPriority());
                         System.out.println("Proje: " + projectName);
+                        if (!projectDescription.isEmpty()) {
+                            System.out.println("Proje Açıklaması: " + projectDescription);
+                        }
                         System.out.println("Deadline: " + due);
                         System.out.println("Kalan Gün: " + remaining);
                         System.out.println("------------------");
@@ -313,6 +319,7 @@ public class Main {
 
                         System.out.println("ID: " + t.getId());
                         System.out.println("Ad: " + t.getTitle());
+                        System.out.println("Açıklama: " + t.getDescription());
                         System.out.println("Öncelik: " + t.getPriority());
 
                         if (t instanceof TimedTask tt) {
@@ -333,15 +340,20 @@ public class Main {
                         }
 
                         String projectName = "Yok";
+                        String projectDescription = "";
                         for (Project p : projectService.getAllProjects()) {
                             if (p.getTasks().contains(t)) {
                                 projectName = p.getName();
+                                projectDescription = p.getDescription();
                                 break;
                             }
                         }
 
                         System.out.println("Kullanıcı: " + userName);
                         System.out.println("Proje: " + projectName);
+                        if (!projectDescription.isEmpty()) {
+                            System.out.println("Proje Açıklaması: " + projectDescription);
+                        }
                         System.out.println("----------------------------");
                     }
 
