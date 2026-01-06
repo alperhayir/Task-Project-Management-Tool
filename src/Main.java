@@ -321,6 +321,7 @@ public class Main {
                         System.out.println("Ad: " + t.getTitle());
                         System.out.println("Açıklama: " + t.getDescription());
                         System.out.println("Öncelik: " + t.getPriority());
+                        System.out.println("Durum: " + (t.isCompleted() ? "Tamamlandı" : "Devam Ediyor"));
 
                         if (t instanceof TimedTask tt) {
                             LocalDate due = tt.getDeadline().getDueDate();
@@ -341,16 +342,21 @@ public class Main {
 
                         String projectName = "Yok";
                         String projectDescription = "";
+                        boolean projectCompleted = false;
                         for (Project p : projectService.getAllProjects()) {
                             if (p.getTasks().contains(t)) {
                                 projectName = p.getName();
                                 projectDescription = p.getDescription();
+                                projectCompleted = p.isCompleted();
                                 break;
                             }
                         }
 
                         System.out.println("Kullanıcı: " + userName);
                         System.out.println("Proje: " + projectName);
+                        if (!projectName.equals("Yok")) {
+                            System.out.println("Proje Durumu: " + (projectCompleted ? "Tamamlandı" : "Devam Ediyor"));
+                        }
                         if (!projectDescription.isEmpty()) {
                             System.out.println("Proje Açıklaması: " + projectDescription);
                         }

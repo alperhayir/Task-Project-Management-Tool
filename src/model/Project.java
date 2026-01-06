@@ -47,4 +47,23 @@ public class Project {
     public void setDescription(String description) {
         this.description = description != null ? description : "";
     }
+
+    /**
+     * Projenin tamamlanıp tamamlanmadığını kontrol eder.
+     * Proje, tüm görevleri tamamlandıysa tamamlanmış sayılır.
+     * Eğer projede hiç görev yoksa false döner.
+     *
+     * @return Tüm görevler tamamlandıysa true, aksi halde false
+     */
+    public boolean isCompleted() {
+        if (tasks.isEmpty()) {
+            return false;
+        }
+        for (Task task : tasks) {
+            if (!task.isCompleted()) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
