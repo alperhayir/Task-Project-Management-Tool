@@ -48,4 +48,20 @@ public class Task  implements Completable {
     public void setPriority(Priority priority) {
         this.priority = priority;
     }
+
+    /**
+     * Görevin detaylı bilgilerini döndürür.
+     * Bu metod polymorphic davranış gösterir - TimedTask sınıfında override edilir.
+     *
+     * @return Görevin detaylı bilgisi
+     */
+    public String getDetails() {
+        return String.format("ID: %s | Başlık: %s | Öncelik: %s | Durum: %s",
+                id, title, priority, completed ? "Tamamlandı" : "Devam Ediyor");
+    }
+
+    @Override
+    public String toString() {
+        return getDetails();
+    }
 }
